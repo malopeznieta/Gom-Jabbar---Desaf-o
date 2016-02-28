@@ -3,7 +3,11 @@ require_relative 'cart'
 
 describe Cart do
   before do
-    pricing_rules = '?'
+    pricing_rules = [
+      PricingRules.new(Item.new("KR", 3.14), DiscountTwoForOne.new),
+      PricingRules.new(Item.new("ME", 42), DiscountThreeOrMore.new(33.33)),
+      PricingRules.new(Item.new("UN", 999), DiscountNull.new)
+    ]
     @cart = Cart.new(pricing_rules)
   end
 
