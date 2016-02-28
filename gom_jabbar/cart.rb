@@ -41,6 +41,27 @@ class DiscountNull
   end
 end
 
+# Clase para las reglas de descuento a aplicar
+# ============================================
+class PricingRules
+  # Inicializo la regla con el item al que quiero aplicar la regla
+  # y el discount que le voy a aplicar a ese item
+   def initialize(item, discount)
+     @item = item
+     @discount = discount
+   end
+   # Obtengo el código del item para buscarlo en la lista de items
+   # y encontrar las coincidencias con los descuentos
+   def item_code
+     @item.code
+   end
+   # Obtengo el precio total del descuento para la cantidad de items que haya
+   # y para el precio normal de ese item
+   def total(quantity)
+     @discount.total(quantity, @item.price)
+   end
+end
+
 class Cart
   def initialize(pricing_rules = nil)
   end
