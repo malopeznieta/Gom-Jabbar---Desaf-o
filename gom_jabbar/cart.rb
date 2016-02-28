@@ -62,14 +62,23 @@ class PricingRules
    end
 end
 
+# Clase del Carrito de la compra
+# ==============================
 class Cart
+  # Inicializo el carrito con los items guardados en un hash inicializado en 0
+  # y con las reglas de descuento
   def initialize(pricing_rules = nil)
+    @items = Hash.new(0)
+    @pricing_rules = pricing_rules
   end
-
+  # Añado uno a la cantidad de items de cada tipo
   def add(code)
+    @items[code] += 1
   end
-
+  # Voy sumando los subresultados de los precios totales con descuento de cada tipo de item
   def total
-    0
+    @pricing_rules.inject(0) {
+      |subtotal, pricing_rule| pricing_rule.total(@items[pricing_rule.item_code]) + subtotal
+    }
   end
 end
